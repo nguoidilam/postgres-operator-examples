@@ -1,0 +1,113 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-data-node01
+  annotations:
+    pv.beta.kubernetes.io/gid: "1000"
+  finalizers:
+    - kubernetes.io/pv-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/pv01/{{ .Release.Name }}/data
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Release.Name }}-data
+  volumeMode: Filesystem
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - staging-land-k8s-node01
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-data-node02
+  annotations:
+    pv.beta.kubernetes.io/gid: "1000"
+  finalizers:
+    - kubernetes.io/pv-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/pv01/{{ .Release.Name }}/data
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - staging-land-k8s-node02
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Release.Name }}-data
+  volumeMode: Filesystem
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-data-node03
+  annotations:
+    pv.beta.kubernetes.io/gid: "1000"
+  finalizers:
+    - kubernetes.io/pv-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/pv01/{{ .Release.Name }}/data
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - staging-land-k8s-node03
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Release.Name }}-data
+  volumeMode: Filesystem
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Release.Name }}-backup-node03
+  annotations:
+    pv.beta.kubernetes.io/gid: "1000"
+  finalizers:
+    - kubernetes.io/pv-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 20Gi
+  hostPath:
+    path: /home/pv01/{{ .Release.Name }}/backup
+    type: DirectoryOrCreate
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - staging-land-k8s-node03
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Release.Name }}-backup
+  volumeMode: Filesystem

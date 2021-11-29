@@ -23,6 +23,9 @@ spec:
       dataVolumeClaimSpec:
         accessModes:
         - "ReadWriteOnce"
+        {{- if not (empty .Values.instanceStorageClassSubfix) }}
+        storageClassName: {{ .Release.Name}}{{ .Values.instanceStorageClassSubfix }}
+        {{- end }}
         resources:
           requests:
             storage: {{ default "1Gi" .Values.instanceSize | quote }}
@@ -116,6 +119,9 @@ spec:
           volumeClaimSpec:
             accessModes:
             - "ReadWriteOnce"
+            {{- if not (empty .Values.backupsStorageClassSubfix) }}
+            storageClassName: {{ .Release.Name}}{{ .Values.backupsStorageClassSubfix }}
+            {{- end }}
             resources:
               requests:
                 storage: {{ default "1Gi" .Values.backupsSize | quote }}

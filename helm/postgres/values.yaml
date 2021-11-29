@@ -9,13 +9,13 @@
 
 # name is the name of the cluster. This defaults to the name of the Helm
 # release.
-# name: hippo
+name: pg01
 
 # postgresVersion sets the version to deploy. This version number needs to be
 # available as one of the "RELATED_IMAGE_POSTGRES_..." images as part of the PGO
 # installation if you want to deploy the image without setting the "postgres"
 # image variable. This defaults to the below value.
-# postgresVersion: 13
+postgresVersion: 13
 
 # postGISVersion if sets and coupled with a PostGIS enabled container, enables
 # PostGIS. This version number needs to be available as one of the
@@ -37,7 +37,7 @@
 # monitoring enables the ability to monitor the Postgres cluster through a
 # metrics exporter than can be scraped by Prometheus. This defaults to the value
 # below.
-# monitoring: false
+monitoring: true
 
 ###################
 # Image Overrides #
@@ -67,26 +67,28 @@
 
 # instanceName lets you set the name of your instances. This defaults to
 # the value below. Setting "instances" overrides this value.
-# instanceName: instance1
+instanceName: data
 
 # instanceSize sets the size of the volume that contains the data. This defaults
 # to the value below. Settings "instances" overrides this value.
-# instanceSize: 1Gi
+instanceSize: 10Gi
 
 # instanceMemory sets the memory limit for the Postgres instances. This defaults
 # to no limit being set, but an example value is set below. Settings "instances"
 # overrides this value.
-# instanceMemory: 2Gi
+instanceMemory: 2Gi
 
 # instanceCPU sets the CPU limit for the Postgres instances. This defaults to
 # no limit being set, but an example value is set below. Setting "instances"
 # overrides this value.
-# instanceCPU: 1000m
+instanceCPU: 2000m
 
 # instanceReplicas lets you set the total number of Postgres replicas. This
 # defaults to the value below. More than on replica enables high availability
 # (HA). Settings "instances" overrides this value.
-# instanceReplicas: 1
+instanceReplicas: 3
+
+instanceStorageClassSubfix: "-data"
 
 ##############################
 # Advanced Postgres Settings #
@@ -128,7 +130,17 @@
 
 # users sets any custom Postgres users and databases that they have  access to
 # as well as any permossions assoicated with the user account.
-# users: {}
+users:
+  - name: postgres
+  - name: jadriver
+    databases:
+      - jadriver
+  - name: landlord
+    databases:
+      - landlord
+  - name: buzzin2
+    databases:
+      - buzzin2
 
 # dataSource specifies a data source for bootstrapping a Postgres cluster.
 # dataSource: {}
@@ -167,7 +179,9 @@
 
 # backupsSize sets the storage size of the backups to a volume in Kubernetes.
 # can be overridden by "pgBackRestConfig", if set. Defaults to the value velow.
-# backupsSize: 1Gi
+backupsSize: 20Gi
+
+backupsStorageClassSubfix: "-backup"
 
 # s3 allows for AWS S3 or an S3 compatible storage system to be used for
 # backups. This allows for a quick setup with S3; if you need more advanced
@@ -296,4 +310,4 @@
 # that uses a SecurityContextConstraint. This usually does not need to be set,
 # but you may want to explicitly set it to "false" when using a SCC like
 # "anyuid"
-# openshift: false
+openshift: false
