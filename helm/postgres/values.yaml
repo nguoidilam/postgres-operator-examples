@@ -136,8 +136,10 @@ users:
     databases:
       - jadriver
   - name: landlord
+    options: "SUPERUSER"
     databases:
       - landlord
+      - template_fiw
   - name: buzzin2
     databases:
       - buzzin2
