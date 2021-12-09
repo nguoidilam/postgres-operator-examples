@@ -1,0 +1,15 @@
+apiVersion: v1
+entries:
+  pgo:
+  - apiVersion: v2
+    appVersion: 5.0.4
+    created: "2021-12-09T09:40:46.662256+07:00"
+    description: Installer for PGO, the open source Postgres Operator from Crunchy
+      Data
+    digest: 39f2eff300902f6178d194920d3cc517cd435e96057983cb60b87ac6039afe74
+    name: pgo
+    type: application
+    urls:
+    - https://nguoidilam.github.io/postgres-operator-examples/helm/charts/pgo-0.2.3.tgz
+    version: 0.2.3
+generated: "2021-12-09T09:40:46.657435+07:00"
